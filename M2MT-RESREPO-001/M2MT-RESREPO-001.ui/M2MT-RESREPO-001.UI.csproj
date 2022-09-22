@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>M2MT_RESREPO_001.UI</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\M2MT-RESREPO-001.Services\M2MT-RESREPO-001.Services.csproj" />
+    <ProjectReference Include="..\M2MT-RESREPO-001.TranslationManagers\M2MT-RESREPO-001.TranslationManagers.csproj" />
+  </ItemGroup>
+
+</Project>

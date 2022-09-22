@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>M2MT_RESREPO_001.Services</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EulynxDpLibrary" Version="1.0.0" />
+    <PackageReference Include="ProRail.IMSpoor.Model" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

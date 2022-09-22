@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator", "Translator\Translator.csproj", "{330AB45C-0538-482B-BB45-053949EBB740}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{330AB45C-0538-482B-BB45-053949EBB740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330AB45C-0538-482B-BB45-053949EBB740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330AB45C-0538-482B-BB45-053949EBB740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330AB45C-0538-482B-BB45-053949EBB740}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D3C67AA-3B38-45F9-A14B-B231742DB3A6}
+	EndGlobalSection
+EndGlobal
