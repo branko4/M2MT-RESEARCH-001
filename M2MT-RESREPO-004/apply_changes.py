@@ -53,9 +53,14 @@ def removeName(line):
     state = NORMAL
     for word in words:
         if ("name" in word):
-            state = REMOVING
+            # print(word[-1])
+            print(word)
+            time.sleep(0.01)
+            if (word[-1] != '"'):
+                state = REMOVING
             continue
         if (state == REMOVING):
+            print(word)
             if ('"' in word):
                 state = NORMAL
             continue
