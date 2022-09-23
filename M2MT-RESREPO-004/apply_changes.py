@@ -130,10 +130,10 @@ try:
             if ("<SwitchBlades" in line):
                 lines = line.split('>')
                 newData += f'{lines[0]} hasSwitchChecker="Unknown" operatingType="Unknown" >\n'
+                newData += '<DivergingPassageRefs />\n<Passage sideTag="Unknown" passageSpeed="40" puic="d065aa4f-4390-4201-93a8-0ba831fd95q3" />\n'
                 continue
             if ("<SwitchMechanism" in line):
                 newData += line.replace('hasSwitchChecker="Unknown"', "").replace('hasSwitchChecker="True"', "").replace('hasSwitchChecker="False"', "")
-                newData += '\n<DivergingPassageRefs />\n<Passage />'
                 newData += '\n'
                 continue
             if ("<SingleSwitch" in line):
