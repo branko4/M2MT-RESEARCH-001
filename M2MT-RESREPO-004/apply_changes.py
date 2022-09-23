@@ -119,8 +119,8 @@ try:
                 lines = line.split('/')
                 newData += f'{lines[0]} isInService="Unknown" /{lines[1]}\n'
                 continue
-            if ("<Passage" in line):
-                lines = line.split('/>')
+            if ("<Passage " in line):
+                lines = line.split('>')
                 newData += f'{lines[0]} passageSpeed="40" />\n'
                 continue
             if ("<KCrossing" in line):
