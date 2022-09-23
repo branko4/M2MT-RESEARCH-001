@@ -133,10 +133,11 @@ try:
                 continue
             if ("<SwitchMechanism" in line):
                 newData += line.replace('hasSwitchChecker="Unknown"', "").replace('hasSwitchChecker="True"', "").replace('hasSwitchChecker="False"', "")
+                newData += '\n<DivergingPassageRefs />\n<Passage />'
                 newData += '\n'
                 continue
             if ("<SingleSwitch" in line):
-                newData += line.replace('isSymmetric="False"', "").replace('isSymmetric="True"',"").replace('isSymmetric="Unknown"',"").replace('divergingSpeed="40"',"")
+                newData += line.replace('isSymmetric="False"', "").replace('isSymmetric="True"',"").replace('isSymmetric="Unknown"',"").replace('divergingSpeed="40"',"").replace('divergingSpeed="50"',"").replace('divergingSpeed="60"',"").replace('divergingSpeed="80"',"")
                 newData += '\n'
                 continue
 
