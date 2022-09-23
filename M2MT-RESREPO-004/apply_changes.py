@@ -129,7 +129,7 @@ try:
                 continue
             if ("<SwitchBlades" in line):
                 lines = line.split('>')
-                newData += f'{lines[0]} hasSwitchChecker="Unknown" >\n'
+                newData += f'{lines[0]} hasSwitchChecker="Unknown" operatingType="Unknown" >\n'
                 continue
             if ("<SwitchMechanism" in line):
                 newData += line.replace('hasSwitchChecker="Unknown"', "").replace('hasSwitchChecker="True"', "").replace('hasSwitchChecker="False"', "")
