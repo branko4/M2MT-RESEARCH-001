@@ -40,6 +40,8 @@ def handlePassageRef(line):
     return f"{jumper} <PassageRefs> {passageRef} </PassageRefs> </Jumper>"
 
 def removeName(line):
+    REMOVING = 0
+    NORMAL = 1
     passedFirstDittoMark = False # Ditto mark = "
     newLine = ""
     LeftArrowSplit = line.split("<")
@@ -48,8 +50,14 @@ def removeName(line):
     rightArrowSplit = LeftArrowSplit[1].split(">")
 
     words = rightArrowSplit[0].split(' ')
+    state = NORMAL
     for word in words:
         if ("name" in word):
+            state = REMOVING
+            continue
+        if (state == REMOVING):
+            if ('"' in word):
+                state = NORMAL
             continue
         newLine += f"{word} "
 
