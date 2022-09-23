@@ -115,6 +115,32 @@ try:
                 # print(newLine)
                 continue
 
+            if ("<Metadata" in line):
+                lines = line.split('/')
+                newData += f'{lines[0]} isInService="Unknown" /{lines[1]}\n'
+                continue
+            if ("<Passage" in line):
+                lines = line.split('>')
+                newData += f'{lines[0]} passageSpeed="40" >\n'
+                continue
+            if ("<KCrossing" in line):
+                lines = line.split('>')
+                newData += f'{lines[0]} isMovable="Unknown" operatingType="Unknown" >\n'
+                continue
+            if ("<SwitchBlades" in line):
+                lines = line.split('>')
+                newData += f'{lines[0]} hasSwitchChecker="Unknown" >\n'
+                continue
+            if ("<SwitchMechanism" in line):
+                newData += line.replace('hasSwitchChecker="Unknown"', "").replace('hasSwitchChecker="True"', "").replace('hasSwitchChecker="False"', "")
+                newData += '\n'
+                continue
+            if ("<SingleSwitch" in line):
+                newData += line.replace('isSymmetric="False"', "").replace('isSymmetric="True"',"").replace('isSymmetric="Unknown"',"").replace('divergingSpeed="40"',"")
+                newData += '<Passage puic="5b84e421-0f72-4648-a6c4-7d3fbb6577d8" sideTag="L" />'
+                newData += '\n'
+                continue
+
 
             # save line when none matches
             newData += f"{line}\n"
