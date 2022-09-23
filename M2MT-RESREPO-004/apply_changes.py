@@ -1,7 +1,5 @@
 import time
 
-print("HELLO!! I am called")
-
 def handlePassageRef(line):
     BEFORE_PASSAGE_REF = 0
     IN_PASSAGE_REF_BEGIN = 1
@@ -53,14 +51,10 @@ def removeName(line):
     state = NORMAL
     for word in words:
         if ("name" in word):
-            # print(word[-1])
-            print(word)
-            time.sleep(0.01)
             if (word[-1] != '"'):
                 state = REMOVING
             continue
         if (state == REMOVING):
-            print(word)
             if ('"' in word):
                 state = NORMAL
             continue
@@ -69,7 +63,11 @@ def removeName(line):
     endSign = '>'
     if ("/>" in line):
         endSign = "\>"
+
+    if (len(LeftArrowSplit) > 2):
+        return f"{newLine}> {rightArrowSplit[1]} <{LeftArrowSplit[2]}"
     return f"{newLine}{endSign}"
+
 
 def handleBufferstop(line):
     # TODO then add bufferstop type
@@ -123,9 +121,9 @@ try:
 finally:
     f.close()
 
-for line in newData.split('\n'):
-    if ("<BufferStop" in line):
-        print(line)
+# for line in newData.split('\n'):
+#     if ("<BufferStop" in line):
+#         print(line)
 
 # TODO save newData
 try:
