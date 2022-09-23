@@ -84,6 +84,7 @@ try:
     # open XSD file  #, encoding="utf-8")
     with open('./Dordrecht_Merged_XSD_Validated.xml', 'r') as f:
         data = f.read()
+        data = data.replace("railConnectionRef", "implementationObjectRef")
         ## print(data)
 
         linedata = data.split('\n')
