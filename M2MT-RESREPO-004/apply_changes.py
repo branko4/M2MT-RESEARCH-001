@@ -137,7 +137,6 @@ try:
                 continue
             if ("<SingleSwitch" in line):
                 newData += line.replace('isSymmetric="False"', "").replace('isSymmetric="True"',"").replace('isSymmetric="Unknown"',"").replace('divergingSpeed="40"',"")
-                newData += '<Passage puic="5b84e421-0f72-4648-a6c4-7d3fbb6577d8" sideTag="L" />'
                 newData += '\n'
                 continue
 
