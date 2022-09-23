@@ -137,7 +137,7 @@ try:
                 continue
             if ("<SingleSwitch" in line):
                 newData += line.replace('isSymmetric="False"', "").replace('isSymmetric="True"',"").replace('isSymmetric="Unknown"',"").replace('divergingSpeed="40"',"").replace('divergingSpeed="50"',"").replace('divergingSpeed="60"',"").replace('divergingSpeed="80"',"")
-                newData += '\n<DivergingPassageRefs />\n<Passage sideTag="Unknown" passageSpeed="40" puic="d065aa4f-4390-4201-93a8-0ba831fd95b3" > <MetaData /> <Location /> </passage>'
+                newData += '\n<DivergingPassageRefs />\n<Passage sideTag="Unknown" passageSpeed="40" puic="d065aa4f-4390-4201-93a8-0ba831fd95b3" > <MetaData /> <Location /> </Passage>'
                 newData += '\n'
                 continue
 
