@@ -37,7 +37,7 @@ def handlePassageRef(line):
             continue
     # print(passageRef)
 
-    return f"{jumper} <PassageRefs> {passageRef} </PassageRef> </Jumper>"
+    return f"{jumper} <PassageRefs> {passageRef} </PassageRefs> </Jumper>"
 
 def removeName(line):
     passedFirstDittoMark = False # Ditto mark = "
