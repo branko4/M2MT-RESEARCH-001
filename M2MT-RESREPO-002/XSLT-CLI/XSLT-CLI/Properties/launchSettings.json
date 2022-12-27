@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "XSLT-CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "--xml example-xml\\Dordrecht_Merged_XSD_Validated.xml --xsl M2MT-RESREPO-002\\translate.xsl --workdir ../../ --out example-xml\\output.xml"
+    }
+  }
+}
