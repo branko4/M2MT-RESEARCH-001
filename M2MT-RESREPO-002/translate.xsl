@@ -26,7 +26,9 @@
                     </xsl:element>
                     <!-- <refersToRsmVehicleStop ref="a94c3d30-fc38-46c2-a567-921f0e5072a9" /> -->
                     <stopsVehicleAtLocation xsi:nil="true" />
-                    <isOfBufferStopType xsi:nil="true" />
+                    <isOfBufferStopType>
+                      <xsl:value-of select="@bufferstopType" />
+                    </isOfBufferStopType>
                   </ownsTrackAsset>
                 </xsl:for-each>
             </ownsDataPrepEntities>
@@ -41,9 +43,9 @@
                           <xsl:value-of select="M2MTsdk:GetID(@puic,'VehicleStop')" />
                         </id>
                         <longname xsi:nil="true" xmlns="http://www.railsystemmodel.org/schemas/Common/1.2" />
-                        <name xmlns="http://www.railsystemmodel.org/schemas/Common/1.2">
+                        <!-- <name xmlns="http://www.railsystemmodel.org/schemas/Common/1.2">
                             <xsl:value-of select="@name"/>
-                        </name>
+                        </name> -->
                         <xsl:element name="locations" namespace="http://www.railsystemmodel.org/schemas/NetEntity/1.2">
                           <xsl:attribute name="ref">
                             <xsl:value-of select="M2MTsdk:GetID(@puic,'usesLocation')" />
@@ -65,29 +67,36 @@
 
                     <!-- StopLocations coordinates for BufferStops -->
                     <xsl:for-each select="//IMSpoor:InitialSituation/IMSpoor:RailInfrastructure/IMSpoor:RailImplementation/IMSpoor:Junctions/IMSpoor:BufferStop">
-                        <usesPositioningSystemCoordinate xmlns="http://www.railsystemmodel.org/schemas/Common/1.2" xsi:type="GeographicCoordinate">
-                            <id>
-                              <!-- 19e26e06-72d9-477c-9687-1010b305d021 -->
-                              <xsl:value-of select="M2MTsdk:GetID(@puic,'usesPositioningSystemCoordinate')" />
-                            </id>
-                            <longname xsi:nil="true" />
-                            <name xsi:nil="true" />
-                            <xsl:element name="positioningSystem">
-                              <xsl:attribute name="ref">
-                                <xsl:value-of select="M2MTsdk:GetID('EPSG:28992,usesPositioningSystem')" />
-                              </xsl:attribute>
-                            </xsl:element>
-                            <!-- <positioningSystem ref="329c5ad3-a3b9-47b7-8163-8647f08c6696" /> -->
-                            <elevation>
-                              <xsl:value-of select="substring-after(substring-after(IMSpoor:Location/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
-                            </elevation>
-                            <latitude>
-                              <xsl:value-of select="substring-before(substring-after(IMSpoor:Location/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
-                            </latitude>
-                            <longitude>
-                              <xsl:value-of select="substring-before(substring-after(IMSpoor:Location/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
-                            </longitude>
-                        </usesPositioningSystemCoordinate>
+                      <xsl:variable name="puic" select="@puic" />
+                        <xsl:for-each select="//IMSpoor:InitialSituation/IMSpoor:StopLocations">
+                          <xsl:choose>
+                            <xsl:when test="@ID = $puic">
+                              <usesPositioningSystemCoordinate xmlns="http://www.railsystemmodel.org/schemas/Common/1.2" xsi:type="GeographicCoordinate">
+                                <id>
+                                  <!-- 19e26e06-72d9-477c-9687-1010b305d021 -->
+                                  <xsl:value-of select="M2MTsdk:GetID(@ID,'usesPositioningSystemCoordinate')" />
+                                </id>
+                                <longname xsi:nil="true" />
+                                <name xsi:nil="true" />
+                                <xsl:element name="positioningSystem">
+                                  <xsl:attribute name="ref">
+                                    <xsl:value-of select="M2MTsdk:GetID('EPSG:28992,usesPositioningSystem')" />
+                                  </xsl:attribute>
+                                </xsl:element>
+                                <!-- <positioningSystem ref="329c5ad3-a3b9-47b7-8163-8647f08c6696" /> -->
+                                <elevation>
+                                  <xsl:value-of select="substring-after(substring-after(IMSpoor:StopLocation/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
+                                </elevation>
+                                <latitude>
+                                  <xsl:value-of select="substring-before(substring-after(IMSpoor:StopLocation/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
+                                </latitude>
+                                <longitude>
+                                  <xsl:value-of select="substring-before(substring-after(IMSpoor:StopLocation/IMSpoor:GeographicLocation/gml:Point/gml:coordinates/text(),','),',')"/>
+                                </longitude>
+                              </usesPositioningSystemCoordinate>
+                            </xsl:when>
+                          </xsl:choose>
+                        </xsl:for-each>
                     </xsl:for-each>
 
                     <!-- BaseLocations for StopLocations of BufferStops -->

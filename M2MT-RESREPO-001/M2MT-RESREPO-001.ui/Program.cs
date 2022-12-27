@@ -11,7 +11,7 @@ namespace M2MT_RESREPO_001.UI
         {
             var dir = $"{CURRENT_WORKING_DIRECTORY}\\example-xml\\";
 
-            var imspoorFileName = "Dordrecht_Merged_XSD_Validated.xml";
+            var imspoorFileName = "Dordrecht_Merged_XSD_Validated_v2.xml";
             //var eulynxSaveFileName = "AutomaticTranslatedEULYNX.xml";
             var eulynxSaveFileName = "output-Jurjen.xml";
 

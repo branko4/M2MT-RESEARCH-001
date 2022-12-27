@@ -1,12 +1,12 @@
 <Query Kind="Program">
   <NuGetReference>EulynxDpLibrary</NuGetReference>
-  <NuGetReference>ProRail.IMSpoor.Model</NuGetReference>
-  <Namespace>ProRail.IMSpoor.Model</Namespace>
-  <Namespace>System.Xml.Serialization</Namespace>
+  <NuGetReference Version="4.0.2">ProRail.IMSpoor.Model</NuGetReference>
+  <Namespace>Models.TopoModels.EULYNX.generic</Namespace>
   <Namespace>Models.TopoModels.EULYNX.rsmCommon</Namespace>
   <Namespace>Models.TopoModels.EULYNX.rsmTrack</Namespace>
   <Namespace>Models.TopoModels.EULYNX.sig</Namespace>
-  <Namespace>Models.TopoModels.EULYNX.generic</Namespace>
+  <Namespace>ProRail.IMSpoor.Model</Namespace>
+  <Namespace>System.Xml.Serialization</Namespace>
   <Namespace>Translator.Util</Namespace>
 </Query>
 
@@ -57,13 +57,18 @@ void Main()
 	TranslationUtil.WriteToFile(eulynx);
 }
 
+BufferStopTypes transferBufferstopType(BufferstopType type) {
+	// values are 1 on 1, i.e. same name
+	return Enum.Parse<BufferStopTypes>(type.ToString());
+}
+
 void Translate(tSituation situation, EulynxDataPrepInterface eulynx, DataContainer dataContainer) 
 {
 
 	// create EULYNX bufferstop
 	var bufferstopquery =
-	from bufferstop in situation.RailInfrastructure.RailImplementation.Junctions
-	where bufferstop is ProRail.IMSpoor.Model.BufferStop
+	from bufferstop in situation.RailInfrastructure.RailImplementation.Junctions as ProRail.IMSpoor.Model.BufferStop[]
+	//where bufferstop is ProRail.IMSpoor.Model.BufferStop
 	//select new VehicleStop()
 	//{
 	//	id = IdManager.computeUuid5<VehicleStop>(bufferstop.puic),
@@ -71,7 +76,7 @@ void Translate(tSituation situation, EulynxDataPrepInterface eulynx, DataContain
 	//}
 	select new Models.TopoModels.EULYNX.sig.BufferStop()
 	{
-		isOfBufferStopType = BufferStopTypes.fixated,
+		isOfBufferStopType = transferBufferstopType(bufferstop.bufferstopType),
 		id = bufferstop.puic,
 		refersToRsmVehicleStop = new tElementWithIDref() { @ref = IdManager.computeUuid5<Models.TopoModels.EULYNX.rsmTrack.VehicleStop>(bufferstop.puic) },
 	} as TrackAsset;
@@ -88,7 +93,7 @@ void Translate(tSituation situation, EulynxDataPrepInterface eulynx, DataContain
 	{
 		id = IdManager.computeUuid5<Models.TopoModels.EULYNX.rsmTrack.VehicleStop>(bufferstop.puic),
 		locations = { new tElementWithIDref() { @ref = IdManager.computeUuid5<SpotLocation>(bufferstop.puic) } },
-		name = bufferstop.name,
+		//name = bufferstop.name,
 	};
 	
 	dataContainer.ownsRsmEntities.ownsVehicleStop.AddRange(rsmVehicleStopQuery.ToList());
@@ -115,12 +120,11 @@ void Translate(tSituation situation, EulynxDataPrepInterface eulynx, DataContain
 
 	// create reference system coordinates
 	var vehiclestopSpotLocationCoordinatesQuery =
-	from bufferstop in situation.RailInfrastructure.RailImplementation.Junctions
-	where bufferstop is ProRail.IMSpoor.Model.BufferStop
-	let imspoorCoordinates = bufferstop.Location.GeographicLocation.Point.coordinates.Split(',')
+	from location in situation.StopLocations
+	let imspoorCoordinates = location.GeographicLocation.Point.coordinates.Split(',')
 	select new GeographicCoordinate()
 	{
-		id = IdManager.computeUuid5<GeographicCoordinate>(bufferstop.puic),
+		id = IdManager.computeUuid5<GeographicCoordinate>(location.ID),
 
 		// RD coordinaten, dutch geosystem
 		longitude = Double.Parse(imspoorCoordinates[0].Replace(".", ",")), // 0 - 300   // Replace is nessecary because the point char will not be translated to 0.1, but the comma is

@@ -1,16 +1,15 @@
 ﻿using M2MT_RESREPO_001.Services;
-using M2MT_RESREPO_001.Services.TranslationServices;
-using M2MT_RESREPO_001.TranslationManagers.RsmEntitiesTranslationManagers.LocationTranslationManagers;
-using Models.TopoModels.EULYNX.rsmCommon;
 using Models.TopoModels.EULYNX.sig;
+using ProRail.IMSpoor.Model;
 using IMSpoorBufferStop = ProRail.IMSpoor.Model.BufferStop;
+using EULYNXBufferStop = Models.TopoModels.EULYNX.sig.BufferStop;
 using RSMVehicleStopTranslationManager = M2MT_RESREPO_001.TranslationManagers.RsmEntitiesTranslationManagers.VehicleStopTranslationManager;
 
 namespace M2MT_RESREPO_001.TranslationManagers.EulynxTMs.TrackAssetTMs.PhysicalTrackAssetTMs.VehicleStopTMs
 {
     internal class BufferStopTranslationManager
     {
-        internal IEnumerable<BufferStop> getBufferStops()
+        internal IEnumerable<EULYNXBufferStop> getBufferStops()
         {
             // get IMSpoor situation
             var iMSpoorProviderService = IMSpoorProviderService.GetInstance();
@@ -20,7 +19,7 @@ namespace M2MT_RESREPO_001.TranslationManagers.EulynxTMs.TrackAssetTMs.PhysicalT
             var rsmVehicleStopTranslationManager = RSMVehicleStopTranslationManager.GetInstance();
 
             // create bufferstops list
-            var bufferStops = new List<BufferStop>();
+            var bufferStops = new List<EULYNXBufferStop>();
 
             // get IMSpoor bufferstop
             //   get IMSpoor junctions
@@ -35,8 +34,9 @@ namespace M2MT_RESREPO_001.TranslationManagers.EulynxTMs.TrackAssetTMs.PhysicalT
                     var imspoorBufferstop = (IMSpoorBufferStop)junction;
 
                     // create bufferstop
-                    var eulynxBufferstop = new BufferStop();
+                    var eulynxBufferstop = new EULYNXBufferStop();
                     eulynxBufferstop.id = imspoorBufferstop.puic;
+                    eulynxBufferstop.isOfBufferStopType = this.TranslateBufferstopType(imspoorBufferstop.bufferstopType);
                     
                     //   get correct bufferstop type
                     //eulynxBufferstop.isOfBufferStopType = BufferStopTypes.fixated;
@@ -51,6 +51,19 @@ namespace M2MT_RESREPO_001.TranslationManagers.EulynxTMs.TrackAssetTMs.PhysicalT
 
             // return bufferstops list
             return bufferStops;
+        }
+
+        private BufferStopTypes TranslateBufferstopType(BufferstopType imspoortype)
+        {
+            switch(imspoortype)
+            {
+                case (BufferstopType.hydraulic): return BufferStopTypes.hydraulic;
+                case (BufferstopType.friction): return BufferStopTypes.friction;
+                case (BufferstopType.fixated): return BufferStopTypes.fixated;
+                case (BufferstopType.other): return BufferStopTypes.other;
+                default:
+                    throw new Exception("Invallid data");
+            }
         }
     }
 }

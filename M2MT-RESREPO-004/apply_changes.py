@@ -84,6 +84,8 @@ def handleBufferstop(line):
 
 READING_BUFFERSTOP_STATE = 0
 READING_FILE_STATE = 1
+REMOVING_BUFFERSTOP_LOCATION = 2
+
 
 bufferstopLocations = []
 index = 0
@@ -128,6 +130,8 @@ try:
                 continue
 
             if (state == READING_BUFFERSTOP_STATE):
+                if ("<Location>" in line):
+                    continue
                 if ("<GeographicLocation" in line):
                     lines = line.split('<')
                     bufferstopLocations[index].append(f"<{lines[1]}")
@@ -138,10 +142,15 @@ try:
                     continue
                 if ("<gml:coordinates>" in line):
                     lines = line.split('<gml:coordinates>')[1]#.split('</gml:coordinates>')
+                    # print(lines)
                     bufferstopLocations[index].append(f"\t\t<gml:coordinates>{lines[0]}")
                     index+=1
-                    state = READING_FILE_STATE
+                    state = REMOVING_BUFFERSTOP_LOCATION
                     continue
+            if (state == REMOVING_BUFFERSTOP_LOCATION):
+                if ("</Location>" in line):
+                    state = READING_FILE_STATE
+                continue
 
             if ("</Remarks>" in line):
                 newData += f"{line}\n"
@@ -151,12 +160,14 @@ try:
                     newData += f'{prefix}\t\t<StopLocation ID="{bufferLocation[0]}">\n'
                     newData += f'{prefix}\t\t\t{bufferLocation[1]}\n'
                     newData += f'{prefix}\t\t\t\t{bufferLocation[2]}\n'
-                    newData += f'{prefix}\t\t\t\t\t{bufferLocation[3]}\n'
+                    newData += f'{prefix}\t\t\t\t\t{bufferLocation[3]}</gml:coordinates>\n'
                     newData += f'{prefix}\t\t\t\t</gml:Point>\n'
                     newData += f'{prefix}\t\t\t</GeographicLocation>\n'
                     newData += f'{prefix}\t\t</StopLocation>\n'
+                newData += f'{prefix}\t</StopLocations>'
                 bufferstopLocations = []
                 index=0
+                continue
 
 
 #     lines = line.split('

@@ -10,10 +10,11 @@ namespace M2MT_RESREPO_001.Services
         public static IMSpoor? GetIMSpoor(string path)
         {
             XmlDocument doc = new XmlDocument();
+            
             doc.Load(path);
 
             string xml = (string) XDocument.Load(path).ToString();
-
+            
             var serializer = new XmlSerializer(typeof(IMSpoor));
             using (var tr = new StringReader(xml))
             {

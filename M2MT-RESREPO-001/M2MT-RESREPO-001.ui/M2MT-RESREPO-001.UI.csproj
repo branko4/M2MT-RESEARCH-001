@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ProRail.IMSpoor.Model" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\M2MT-RESREPO-001.Services\M2MT-RESREPO-001.Services.csproj" />
     <ProjectReference Include="..\M2MT-RESREPO-001.TranslationManagers\M2MT-RESREPO-001.TranslationManagers.csproj" />
   </ItemGroup>

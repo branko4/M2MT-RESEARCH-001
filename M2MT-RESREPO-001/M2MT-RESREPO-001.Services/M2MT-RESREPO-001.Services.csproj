@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="EulynxDpLibrary" Version="1.0.0" />
-    <PackageReference Include="ProRail.IMSpoor.Model" Version="2.0.0" />
+    <PackageReference Include="ProRail.IMSpoor.Model" Version="4.0.2" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using Models.TopoModels.EULYNX.generic;
+using Models.TopoModels.EULYNX.generic;
 using Models.TopoModels.EULYNX.rsmCommon;
 using Models.TopoModels.EULYNX.sig;
 using ProRail.IMSpoor.Model;

@@ -37,9 +37,20 @@ namespace M2MT_RESREPO_001.TranslationManagers.RsmEntitiesTranslationManagers
                     vehicleStop.id = Guid.NewGuid().ToString();
 
                     vehicleStop.locations = new List<tElementWithIDref>();
-                    vehicleStop.locations.Add(spotLocationTranslationManager.CreateSpotLocation(item.Location.GeographicLocation, item.puic));
+                    var a = (BufferStop)item;
+                    var locationReference = a.stopsVehicleAt;
+                    // bug/ mistake in XSD, since this should be a list, not a object
+                    var stopLocations = iMSpoorProviderService.Situation.StopLocations;
 
-                    vehicleStop.name = item.name;
+                    foreach (var stoplocation in stopLocations)
+                    {
+                        if (stoplocation.ID.Equals(locationReference)) vehicleStop.locations.Add(spotLocationTranslationManager.CreateSpotLocation(stoplocation.GeographicLocation, item.puic));
+                    }
+
+                    //vehicleStop.locations.Add(spotLocationTranslationManager.CreateSpotLocation(item.Location.GeographicLocation, item.puic));
+
+                    // variable is removed
+                    //vehicleStop.name = item.name;
 
                     PUICWithVehicleStopsID.Add(item.puic, vehicleStop.id);
                     vehicleStops.Add(vehicleStop);
